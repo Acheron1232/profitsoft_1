@@ -52,6 +52,6 @@ public class JsonGenerator {
     }
 
     public static void main(String[] args) throws IOException {
-        generateAuthorsJson(100, 13, 10);
+        generateAuthorsJson(10000, 13, 100);
     }
 }

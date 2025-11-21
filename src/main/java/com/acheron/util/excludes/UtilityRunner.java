@@ -8,6 +8,8 @@ import com.acheron.util.ColorPrinter;
 import com.acheron.writer.SingleThreadedWriter;
 
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Measures performance (time + memory) of the parsing pipeline.
@@ -20,6 +22,10 @@ public class UtilityRunner {
     private static final String COLOR_HEADER = ColorPrinter.PURPLE;
 
     public static void main(String[] args) {
+
+        if (args.length == 0) {
+            args = new String[] {"./src/main/resources/authors", "lastName"};
+        }
 
         MainService<ConcurrentMap<String, Long>> authorMainService =
                 new MainService<>(
@@ -39,7 +45,7 @@ public class UtilityRunner {
             long startTime = System.currentTimeMillis();
             try{
 
-                authorMainService.process(args);
+                authorMainService.process(args, Executors.newSingleThreadExecutor());
             }catch (SystemArgsException e){
                 ColorPrinter.println(ColorPrinter.RED, e.getMessage());
             }
