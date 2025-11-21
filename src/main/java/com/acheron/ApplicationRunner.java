@@ -17,7 +17,9 @@ public class ApplicationRunner {
                         new ThreadedParser(Author.class),
                         new SingleThreadedWriter());
 
-        args = new String[] {"./src/main/resources/authors", "books"};
+        if (args.length == 0) {
+            args = new String[] {"./src/main/resources/authors", "lastName"};
+        }
 
         try{
             authorMainService.process(args); // You can set the executor .process(args, executorService);
