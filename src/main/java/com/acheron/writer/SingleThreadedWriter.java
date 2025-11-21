@@ -28,7 +28,10 @@ public class SingleThreadedWriter implements XmlWriter<ConcurrentMap<String, Lon
         try {
             // Wrap map into a DTO for clean XML structure
             XmlDataSchemaDto wrapper = new XmlDataSchemaDto();
-            map.forEach((key, value) -> wrapper.addItem(new XmlDataSchemaDto.ItemDto(key, value)));
+            map.entrySet().stream()
+                    .sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
+                    .forEach(entry -> wrapper.addItem(new XmlDataSchemaDto.ItemDto(entry.getKey(), entry.getValue())));
+
 
             xmlMapper.writeValue(file, wrapper);
 

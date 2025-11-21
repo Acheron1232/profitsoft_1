@@ -45,7 +45,7 @@ public class UtilityRunner {
             long startTime = System.currentTimeMillis();
             try{
 
-                authorMainService.process(args, Executors.newSingleThreadExecutor());
+                authorMainService.process(args, Executors.newVirtualThreadPerTaskExecutor());
             }catch (SystemArgsException e){
                 ColorPrinter.println(ColorPrinter.RED, e.getMessage());
             }
